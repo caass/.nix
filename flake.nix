@@ -29,7 +29,8 @@
             # Set Git commit hash for darwin-version.
             system.configurationRevision = self.rev or self.dirtyRev or null;
           }
-          ./machines/macbook/configuration.nix
+          ./machines/macbook.nix
+          ./roles/base.nix
           lix-module.nixosModules.default
         ];
       };
