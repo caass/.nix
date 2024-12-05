@@ -6,6 +6,9 @@
     "flakes"
   ];
 
+  # Allow unfree software
+  nixpkgs.config.allowUnfree = true;
+
   environment.systemPackages = [
     pkgs.vim
 
