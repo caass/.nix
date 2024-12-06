@@ -2,6 +2,8 @@ args @ {
   self,
   darwin,
   sharedModules,
+  home-manager,
+  vars,
   ...
 }: let
   # Wrapper function for generating darwin config
@@ -10,7 +12,7 @@ args @ {
     arch,
   }: let
     # Shared configuration across all darwin hosts
-    baseConfig = {
+    baseModule = {
       # Set Git commit hash for darwin-version.
       system.configurationRevision = self.rev or self.dirtyRev or null;
 
@@ -20,10 +22,13 @@ args @ {
 
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "${arch}-darwin";
+
+      # Tell home-manager where to manage our home
+      users.users.${vars.user}.home = /Users/${vars.user};
     };
 
     # Import per-host config
-    hostConfig =
+    hostModule =
       import (
         if builtins.pathExists ./${hostName}/default.nix
         then ./${hostName}
@@ -37,8 +42,9 @@ args @ {
       modules =
         sharedModules
         ++ [
-          baseConfig
-          hostConfig
+          home-manager.darwinModules.home-manager
+          baseModule
+          hostModule
         ];
     };
   };

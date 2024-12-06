@@ -1,4 +1,8 @@
-baseArgs @ {lix, ...}: let
+baseArgs @ {
+  lix,
+  vars,
+  ...
+}: let
   # Configuration module used across all hosts
   sharedConfig = {pkgs, ...}: {
     # Packages we want on every system
@@ -21,6 +25,25 @@ baseArgs @ {lix, ...}: let
       "nix-command"
       "flakes"
     ];
+
+    # Nixpkgs config
+    nixpkgs.config = {
+      # Allow unfree software
+      allowUnfree = true;
+
+      # Error on the wrong system
+      allowUnsupportedSystem = false;
+    };
+
+    home-manager = {
+      # tbqh idk what these do
+      useGlobalPkgs = true;
+      useUserPackages = true;
+
+      extraSpecialArgs = baseArgs;
+
+      users.${vars.user} = import ../users/${vars.user};
+    };
   };
 
   # Modules used across all different hosts
