@@ -13,18 +13,18 @@
     };
   };
 
-  outputs =
-    inputs:
-    let
-      # Variables used for system configuration
-      vars = {
-        user = "cass";
-      };
+  outputs = inputs: let
+    # Variables used for system configuration
+    vars = {
+      user = "cass";
+    };
 
-      # Forward inputs and variables
-      args = inputs // {
+    # Forward inputs and variables
+    args =
+      inputs
+      // {
         inherit vars;
       };
-    in
+  in
     import ./hosts args;
 }
