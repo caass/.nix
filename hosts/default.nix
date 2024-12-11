@@ -18,6 +18,9 @@ baseArgs @ {
 
       # Tools to help understand nix
       pkgs.nix-diff
+
+      # SCM
+      pkgs.fossil
     ];
 
     # Necessary for using flakes
