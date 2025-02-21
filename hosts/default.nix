@@ -21,6 +21,9 @@ baseArgs @ {
 
       # SCM
       pkgs.fossil
+
+      # devenv
+      pkgs.devenv
     ];
 
     # Necessary for using flakes

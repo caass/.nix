@@ -1,1 +1,3 @@
-_: {}
+_: {
+  nix.settings.trusted-users = ["root" "cass"];
+}
